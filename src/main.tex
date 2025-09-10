@@ -1,0 +1,258 @@
+\documentclass{article}
+
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{thmtools}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{framed}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tcolorbox}
+
+\colorlet{LightGray}{White!90!Periwinkle}
+\colorlet{LightBlue}{Blue!10}
+\colorlet{LightOrange}{Orange!15}
+\colorlet{LightGreen}{Green!15}
+
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+
+\declaretheoremstyle[name=Theorem,]{thmsty}
+\declaretheorem[style=thmsty,numberwithin=section]{theorem}
+\tcolorboxenvironment{theorem}{colback=LightGreen}
+
+\declaretheoremstyle[name=Definition,]{prosty}
+\declaretheorem[style=prosty,numberwithin=section]{definition}
+\tcolorboxenvironment{definition}{colback=LightBlue}
+
+\declaretheoremstyle[name=Principle,]{prcpsty}
+\declaretheorem[style=prcpsty,numberwithin=section]{principle}
+\tcolorboxenvironment{principle}{colback=LightGreen}
+
+
+\setstretch{1.2}
+\geometry{
+    textheight=9in,
+    textwidth=5.5in,
+    top=1in,
+    headheight=12pt,
+    headsep=25pt,
+    footskip=30pt
+}
+
+% ------------------------------------------------------------------------------
+
+\begin{document}
+
+% ------------------------------------------------------------------------------
+% Cover Page and ToC
+% ------------------------------------------------------------------------------
+
+\title{ \normalsize \textsc{}
+		\\ [2.0cm]
+		\HRule{1.5pt} \\
+		\LARGE \textbf{\uppercase{Math 427}
+		\HRule{2.0pt} \\ [0.6cm] \LARGE{Subtitle} \vspace*{10\baselineskip}}
+		}
+\date{}
+\author{\textbf{Author} \\ 
+		Terry Qiu \\
+		Urbana-Champaign \\
+		Fall 2025}
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+% ------------------------------------------------------------------------------
+
+\section{Integers and Permutations}
+
+\subsection{Integers Modulo $n$}
+
+\begin{definition}{Congruence modulo $n$}
+    Let $a,b$ be integers. We say that $a$ is congruent to $b$ modulo $n$ if
+    \[n|(a-b) \]
+    where $n$ is some integer also. 
+\end{definition}
+Alternatively, notice that $a$ is congruent to $b$ modulo $n$ also means that 
+$a$ has remainder $b$ when divided by $n$, $a=nk+b$.
+
+\vspace{4mm}
+Congruence as such defined a equivalence relation on $\mathbb{Z}$. In other words,
+\[a\equiv b\pmod{n} \iff n|(a-b)\]
+\begin{theorem}
+    \[a\equiv b\pmod{n} \iff n|(a-b)\]
+    This defines a valid equivalence relation, for $n\geq 2$.
+\end{theorem}
+
+\begin{proof}
+    It suffices to show that $a\equiv b \pmod{n}$ is reflexive, transitive and symmetric.
+    
+    \vspace{4mm}
+    Notice that for any $a\in \mathbb{Z}$ and any $n\geq 2$, we have 
+    \[ n|(a-a)=n|0\]
+    So $a\equiv a \pmod{n}$ for any $a$. If $n|(a-b)$ and $n|(b-c)$, then
+    \[k_1n=a-b, \quad k_2n=b-c\]
+    But then 
+    \[n(k_1+k_2)= a-c\]
+    So $n|(a-c)$, which implies $a\equiv c\pmod{n}$. For symmetry, notice that 
+    \[n|(a-b) \implies k_1n=(a-b) \implies (-k_1)n =(b-a)\]
+    So $n|(b-a)$.
+    \vspace{4mm}
+\end{proof}
+\begin{theorem}
+    If $a\in \mathbb{Z}$, then $[a]=[r]$ for some $0\leq r\leq n-1$, where $n\geq 2$.
+\end{theorem}
+\begin{proof}
+    If $0\leq a\leq n-1$ then we are done. So, there are really two cases to consider
+    $a\geq n$ or $a\leq -1$. Suppose that $a\geq n$, then
+    \begin{align*}
+        [x]=\{a | a\equiv x \text{ mod }n\}
+    \end{align*}
+    By the division algorithm, $x=nk+r$ for $0\leq r \leq n-1$. But this means that 
+    \begin{align*}
+        x\equiv r \text{ mod } n
+    \end{align*}
+    So in fact 
+    \begin{align*}
+        [x]=\{a | a\equiv r \text{ mod }n\}=[r]
+    \end{align*}
+    The same is true when $x\leq -1$.
+\end{proof}
+\begin{theorem}
+$[a]=[b]$ if and only if $a\equiv b \pmod{n}$.
+\end{theorem}
+What this means is that to prove $a\equiv b \pmod{n}$ for some $n\geq 2$. It suffices 
+to prove $[a] =[b]$ in $\mathbb{Z}_n$.
+\\\\
+For example, suppose we wanted to find the remainder of $4^{119}$ when divided by $7$.
+It suffices to find the $0\leq r < 7$ such that $4^{119} \equiv r \pmod{7}$. But for any such $r$, we must have
+\begin{align*}
+    [4^{119}]= [r]
+\end{align*}
+We can work out $r$ by working with multiplication in $\mathbb{Z}_7$.\\\\
+\textbf{Example:}
+Prove that $a$ is divisible by $9$ if and only if the sum of its digits is divisible by $9$.
+\begin{proof}
+    Let $a$ be some arbitrary integer and consider it as its expansion in base $10$.
+    Suppose without loss of generality that
+    \begin{align*}
+        a=d_nd_{n-1}...d_0
+    \end{align*}
+    Then
+    \begin{align*}
+        a=d_n\cdot10^n + ...+ d_0 \cdot 10^0
+    \end{align*}
+    It suffices to show that
+    \begin{align*}
+        a \equiv 0 \pmod{9}
+    \end{align*}
+    But this is true in integer mod $9$ if and only if 
+    \begin{align*}
+        [a]=[0]
+    \end{align*}
+    But then
+    \begin{align*}
+        [a]=[d_n\cdot10^n + ...+ d_0 \cdot 10^0]=[d_n][10^n]+...+[d_0]
+    \end{align*}
+    Notice that
+    \begin{align*}
+        10\equiv 1 \pmod{9}
+        \implies 10^n \equiv 1^n \equiv 1\pmod{9}
+    \end{align*}
+    So, $[10^n]=[1]$ for any $n\in\mathbb{N}$. This means that
+    \begin{align*}
+        [a]=[d_n\cdot10^n + ...+ d_0 \cdot 10^0]=[d_n][1]+...+[d_0]= [d_n]+...+[d_0]
+    \end{align*}
+    So 
+    \begin{align*}
+        a \equiv d_n+d_{n-1}+...+d_0 \pmod{9}
+    \end{align*}
+    Now suppose that $a$ is divisible by $9$, then by transitivity the sum of the digits is divisible by $9$. On the otherhand, if the sum
+    of the digits is divisible by $9$, then by transitivity $a$ is divisible by $9$ too. This is what we needed to show.
+    
+\end{proof}
+\begin{definition}
+    We call $[0]$ and $[1]$ the roots and unity of $\mathbb{Z}_n$ respectively.
+\end{definition}
+Suppose we are presented with the problem of solving congruence equations. For example, consider
+in integers modulo $17$, the equation
+\begin{align*}
+    5x\equiv 2 \text{ mod } 17
+\end{align*}
+We want to find a $x$ such that $5x$ has remainder $2$ when divided by $17$. We can guess the solution by trial an error, but the better way is to 
+consider the following problem. We ask whether $5$ has an inverse element.
+\begin{definition}
+    An inverse element of $[a]$ in the integers modulo $n$ is the class $[b]$ such
+    that $[a][b]=[1]$.
+\end{definition}
+Why does this matter? If $5$ has an inverse then we can multiply both sides by that inverse. Suppose that the inverse 
+is $[b]$. We have
+\begin{align*}
+    [5][b][x]&=[2][b] \\
+    [x]&=[2][b]=[2b]
+\end{align*}
+If an inverse exists, then $[x]=[2b]$. Does there exists a solution to congruence relations of the sort 
+\[ax\equiv b \text{ mod } n\]
+when $a$ is non invertible? We have a solution if $d=\gcd(a,n)\mid b$ and we dont have a solution when $d=\gcd(a,n)\nmid b$.
+We have the following theorem relating to whether an element is invertible in $\mathbb{Z}_n$.
+\begin{theorem}
+    $[a]$ is invertible in $\mathbb{Z}_n$ if and only if $\gcd(a,n)=1$.
+\end{theorem}
+\begin{proof}
+    If $\gcd(a,n)=1$, then $1=ax+ny$ for some integers $x,y$. This means alternatively that $n|(1-ax)$ which means
+    \[[ax]\equiv [1] \text{ mod } n\]
+    So $[a]$ is invertible in particular by $[x]$. The reverse is also obvious.
+\end{proof}
+The following theorem is convenient for solving congruence relations.
+\begin{theorem}{Chinese Remainder Theorem or the CRT}
+    The equations
+    \begin{align*}
+        x \equiv s \text{ mod } m \quad x \equiv t \text{ mod } n
+    \end{align*}
+    has a solution $x$ when $m,n$ are relatively prime.
+\end{theorem}
+\begin{proof}
+    Suppose $m,n$ are relatively prime. We can write $1$ as a linear combination of
+    $m$ and $n$ by Bezout's identity.
+    \begin{align*}
+        1=mx+ny
+    \end{align*}
+    Let \begin{align*}
+        x=mxt+nys
+    \end{align*}
+    Then
+    \begin{align*}
+        x-s = mxt+(ny-1)
+    \end{align*}
+    But $ny-1 =-mx$. So 
+    \begin{align*}
+        x-s = mxt-mx =mx(t-1)
+    \end{align*}
+    So $m|(x-s)$. This is what it means for $x$ to be congruent to $s$ modulo $m$.
+    Similarly, 
+    \begin{align*}
+        x-t&=(mx-1)t+nys \\
+        x-t &= ny(s-t)
+    \end{align*}
+    So $n|(x-t)$.
+
+    
+\end{proof}
+
+% ------------------------------------------------------------------------------
+% Reference and Cited Works
+% ------------------------------------------------------------------------------
+
+\bibliographystyle{IEEEtran}
+\bibliography{References.bib}
+
+% ------------------------------------------------------------------------------
+
+\end{document}
