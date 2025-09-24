@@ -21,15 +21,15 @@
 \newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
 
 \declaretheoremstyle[name=Theorem,]{thmsty}
-\declaretheorem[style=thmsty,numberwithin=section]{theorem}
+\declaretheorem[style=thmsty,numberwithin=subsection]{theorem}
 \tcolorboxenvironment{theorem}{colback=LightGreen}
 
 \declaretheoremstyle[name=Definition,]{prosty}
-\declaretheorem[style=prosty,numberwithin=section]{definition}
+\declaretheorem[style=prosty,numberwithin=subsection]{definition}
 \tcolorboxenvironment{definition}{colback=LightBlue}
 
 \declaretheoremstyle[name=Principle,]{prcpsty}
-\declaretheorem[style=prcpsty,numberwithin=section]{principle}
+\declaretheorem[style=prcpsty,numberwithin=subsection]{principle}
 \tcolorboxenvironment{principle}{colback=LightGreen}
 
 
@@ -242,9 +242,245 @@ The following theorem is convenient for solving congruence relations.
         x-t &= ny(s-t)
     \end{align*}
     So $n|(x-t)$.
-
-    
 \end{proof}
+\newpage
+\subsection{Permutations}
+\begin{definition}
+    A permutation on $X_n=\left\{ 1,2,...,n \right\}$ is a bijective function 
+    \[
+    \sigma: X_n \rightarrow X_n
+    \]
+    We write $S_n$ for the group of all permutations on $X_n$.
+\end{definition}
+\begin{theorem}
+    The set $S_n$ of permutations has $n!$ elements.
+\end{theorem}
+We say that an element is moved by a permutation if it is mapped to another element. Otherwise, if it is mapped to itself, we call it fixed.
+Two permutations are disjoint if the intersection of the sets moved by the permutations is the empty set.
+\begin{theorem}
+If $k$ is moved by $\sigma$ then $\sigma k$ is moved by $\sigma $ also.
+\end{theorem}
+\begin{proof}
+    Suppose $k$ is moved by $\sigma$ but $\sigma k$ is not moved by $\sigma$. Then 
+    $\sigma(\sigma k)=\sigma k$. By injectivity, $\sigma k=k$. But $k$ is moved by $\sigma$. This is a contradiction. $\sigma k$ must be moved by $\sigma$ also.
+\end{proof}
+This means that if we have an element moved by $\sigma$, then permuting it by $n$ times will still give us an element that is moved by $\sigma$. In other words, we cannot go from being moved 
+by $\sigma$, to not being moved by $\sigma$.
+\begin{theorem}
+    If $\sigma$ and $\tau$ are disjoint, then they commute.
+    \[
+    \sigma \tau = \tau \sigma
+    \]
+\end{theorem}
+\begin{proof}
+    It suffices to show that for every element in the set that they biject on $\sigma \tau$ takes on the same 
+    value as $\tau \sigma$.
+    \\\\
+    There are three cases,\\\\
+    $\textbf{Case 1}$
+    Suppose that $k$ is moved by $\tau$ but not by $\sigma$. Then 
+    \[
+    \tau\sigma(k)=\tau (k)
+    \]
+    By the previous result $\tau k$ is still moved by $\tau$. Because $\sigma$ and $\tau$ are disjoint
+    $\tau k$ cannot be moved by $\sigma$. So
+    \[
+    \tau\sigma(k)=\tau (k)= \sigma\tau(k)
+    \]
+    $\textbf{Case 2}$ 
+    Suppose $k$ is moved by $\sigma$ but fixed by $\tau$. This is the symmetric case to Case $1$.
+    $\textbf{Case 3}$ 
+    Suppose $k$ is moved by neither $\sigma$ nor by $\tau$, then
+    \[
+    \sigma \tau k = k =\tau \sigma k
+    \]
+    In all three cases, $\sigma$ and $\tau$ commutes.
+\end{proof}
+\begin{theorem}
+    Every non identity permutation is a product of disjoint cycles of length at least $2$
+\end{theorem}
+\begin{theorem}
+    Every cycle with length $r\geq 2$ can be factored into $r-1$ transpositions.
+\end{theorem}
+\begin{theorem}
+    If a permutation can be factored into $m$ transpositions and $n$ transpositions. Then $m$ and $n$ are of the same parity.
+\end{theorem}
+\begin{definition}
+    We say that a permutation $\sigma$ is odd if it can be factored into an odd number of transpositions. We say
+    that it is even otherwise.
+\end{definition}
+To determine the parity of any permutation, we can first factor them into disjoint cycles. Then, we can use the fact
+that an $r$-cycle is a product of $r-1$ transpositions to determine the parity of each cycles individually. Of course,
+the parity of the entire group is the sum of the parities of the $r$-cycles. 
+\section{Groups}
+\subsection{Binary operations}
+
+\subsection{Groups}
+
+\newpage
+\subsection{Cyclic Groups}
+Let $G$ be a group and let $g$ be an element of $G$. Write
+\[
+\langle g\rangle =\left\{ g^k| k\in\mathbb{Z} \right\}
+\]
+\begin{theorem}
+    For any $g\in G$, $\langle g \rangle$ is a subgroup of $G$ and for every subgroup $H$ of $G$ containing $g$,
+    $\langle g \rangle \subseteq H$
+\end{theorem}
+\begin{proof}
+    The proof for the first statement is clear, so we show only that any subgroup $H$ containing $g$ contain $\langle g \rangle$.
+    Since $H$ contains $g$, it contains any finite composition of $g$. In other words, $gg=g^2\in H$. This means that $g^k\in H$ for any $k\in \mathbb{Z}$.
+\end{proof}
+\begin{definition}
+    The order of an element $g$ of a group $G$ is the smallest number $n$ such that 
+    \[
+    g^n=1
+    \]
+    If $g^n=1$ only when $n=0$,  then we say that the order of $g$ is infinite.
+\end{definition}
+The following theorem works with the situation where $g$ has order $n$.
+\begin{theorem}
+    
+    If the order of $g\in G$ is $n$, then $g^k =1$ if and only if $n|k$.
+\end{theorem}
+\begin{proof}
+    Suppose that $n|k$, then $k=qn$ for some $q\in \mathbb{Z}$, write $g^k=g^{qn}=(g^n)^q=1^q=1$. On the other hand,
+    suppose that $g^k=1$. Write $k=qn+r$ for some $0\leq r\leq n-1$, then 
+    \[
+    g^r =g^kg^{-qn}=g^k(g^n)^{-q}=g^k1^{-q}=g^k1=g^k=1
+    \]
+    But if $r\leq n-1$ and $r$ is not $0$, then $g^r=1$ contradicts the assumption that $g$ has order $n$. So $r$ must be $0$. This completes the proof.
+\end{proof}
+\begin{theorem}
+    $g^k=g^m$ if and only if $k\equiv m \text{ mod } n$.
+\end{theorem}
+\begin{proof}
+    Notice that $g^{k-m}=1$. But by theorem $2.3.2$, $n|k-m$. This is what it means for $k$ to be congruent to $m$.
+\end{proof}
+\begin{theorem}
+    $\langle g \rangle=\left\{ 1, g, g^2,g^3,\cdots, g^{n-1} \right\}$ where $g^i$ is distinct for $0\leq i\leq n-1$.
+\end{theorem}
+This theorem says that $\langle g \rangle$ is in fact finite if the order of $G$ is finite. This is not entirely obvious, so here we give a proof.
+\begin{proof}
+    $\langle g \rangle\supseteq\left\{ 1, g, g^2,g^3,\cdots, g^{n-1} \right\}$ is clear so we prove $\langle g \rangle\subseteq\left\{ 1, g, g^2,g^3,\cdots, g^{n-1} \right\}$. 
+    Let $x\in \langle g \rangle$ be arbitrary. Then $x=g^k$ for some $k\in \mathbb{Z}$. Write $k=qn+r$ for $0\leq r < n$. Then 
+    \[
+    g^k = g^{qn+r}=g^{qn}g^r= (g^n)^qg^r= 1^qg^r=g^r
+    \]
+    So any element in $\langle g \rangle$ is $g^i$ for $0\leq i \leq n-1$. This is what we needed to show. 
+    \\\\
+    To show that they are distinct, take two elements $g^m$ and $g^k$ from the set. If $g^m =g^k$, then
+    \[
+    g^{m-k}=1
+    \]
+    This implies that $n|m-k$. But $0\leq m-k < n$. So $m-k=0$. So they are the same if and only if they have the same power. 
+    In otherwords, no elements with distinct powers are the same.
+\end{proof}
+\begin{theorem}
+    If the order of $g$ is $n$ and if $d|n$ with $d\geq 1$, then the order of $g^d$ is $\frac{n}{d}$.
+\end{theorem}
+\begin{proof}
+    Notice that
+    \[
+    (g^d)^{\frac{n}{d}}=g^n=1
+    \]
+    where $n$ is the order of $g$. So it is enough to show that $\frac{n}{d}$ is the smallest such power. Suppose there exists
+    an $r\geq 1$ such that
+    \[
+    (g^d)^r=g^{dr}=1
+    \]
+    then $n|dr$. Write $dr=qn$ for some $q$. Then since $n=d\frac{n}{d}$, we have that $dr =qd\frac{n}{d}$. But $d\geq 1$. So $r=q\frac{n}{d}$. But this means that $\frac{n}{d}$ divides $r$ so 
+    that $r$ is at least as big as $\frac{n}{d}$. This shows that $\frac{n}{d}$ is the minimal power such that $g^{\frac{n}{d}}=1$ is the identity.
+\end{proof}
+\begin{theorem}
+    Every cyclic group is abelian. The converse is not generally true.
+\end{theorem}
+This theorem is a consequence of addition being commutative.
+\begin{theorem}
+    Any subgroup $H$ of a cyclic group $G = \langle g \rangle$ is cyclic. In fact, $H$ is generated by $g^m$ where $m$ is smallest $m$ such that 
+    $g^m$ in $H$.
+\end{theorem}
+\begin{proof}
+    Suppose that $H$ is a subgroup of $G$ and $\langle g \rangle$ is a cyclic group. If $H=\left\{ 1 \right\}$ then $H=\langle 1 \rangle$. Suppose that $H$ 
+    contains elements beyond the identity. Then $g^m\in H$ for some $m\in \mathbb{Z}$. Since the inverse of $g^m$ must exists for any $m$, it is enough to consider the cases where $g^m\in H$ for positive $m$s.
+    In particular, pick the smallest positive $m$ such that $g^m\in H$. We want to show that $\langle g^m \rangle = H$. Pick any element $h\in H$, 
+    so $h=g^k$ for some $k\in \mathbb{N}$. By the Euclidean algorithm there exists $0\leq r\leq k-1$ such that
+    \[
+    k=mq+r 
+    \]
+    so $g^k=g^{mq+r}$. But then $g^r =g^kg^{-mq}=g^k(g^{m})^{-q}\in H$ eventhough $r< m$. This means that $r$ must be equal to $0$ otherwise $m$ is not the smallest element. In otherwords, $k$ is an integer 
+    multiple of $m$. This means that $g^k\in \langle g \rangle$. This is what we needed to show.
+
+\end{proof}
+\begin{theorem}
+    Suppose that $G=\langle g \rangle$, then $G=\langle g^k \rangle$ if and only if $\gcd(k,n)=1$ where $n$ is the order of $g$.
+\end{theorem}
+\begin{proof}
+      Suppose that $\gcd(k, n)=1$. Then by Bezout's theorem, there exists solutions $q,t$ to the equation $1=qk+tn$. So let $g\in G$ be arbitrary, notice that 
+      \[
+      g^1 = g^{qk+tn}= (g^k)^q+(g^n)^t = (g^k)^q \in G
+      \]
+      So any $g\in G$ is a power of $g^k$. This shows that $G=\langle g^k \rangle$. On the other hand, suppose that 
+$G= \langle g^k \rangle$. Let $g\in G$ be abitrary. Then $g=(g^k)^m$ for some $m\in \mathbb{Z}$. But this means that $g^{1-km}=1$. But then $n|1-km$. So $nq =1-km$, such that $nq+km=1$. 
+This means that $\gcd(k,n)=1$. Since there exists solutions to the equation $nq+km=1$.
+\end{proof}
+\begin{theorem}
+    Let $G$ be a group with order $n$ and 
+    suppose that $H$ is a subgroup of $G$. Then $H=\langle g^d \rangle$ for some $d$ that divides $n$.
+\end{theorem}
+\begin{proof}
+    By theorem $2.3.8$, any subgroup of a cyclic group is cyclic. So $H=\langle g^m \rangle$ for some $m\in \mathbb{Z}$. Let 
+    $d=\gcd(m,n)$. Because $H=\langle g^m \rangle$ for some $m$, any element in $H$ is a power of $g^m$. Since $d|m$, $dq=m$ for some $q$. So $g^m= g^{dq}=(g^d)^q\in H$.
+    On the other hand, suppose that $x$ is an element $\langle g^d\rangle$, then $x=(g^d)^k$ for some $k \in \mathbb{Z}$ and  
+    \[
+    (g^d)^k= (g^{qm+tn})^k=g^{qmk}g^{tnk}= (g^{m})^{qk}(g^n)^{tk}\in H
+    \]
+    THis completes the proof.
+\end{proof}
+Moreover, we know that if $g$ has order $n$ then $g^d$ must have order $n/d$.
+\begin{theorem}
+    Suppose that $G=\langle g \rangle$ and the order of $g$ is $n$. If $k|n$, then $\langle g^{\frac{n}{k}} \rangle$ is the unique subgroup of order $k$.
+\end{theorem}
+\begin{proof}
+    Suppose that $K$ is the subgroup of order $k$. Since it is a subgroup there exists some integer $d$ such that 
+    \[
+    K=\langle g^d \rangle
+    \] 
+    Additionally, since $d|n$, $dq=n$ for some $q\in \mathbb{Z}$. By theorem $2.3.5$ we have that the order of $g^d$ is $\frac{n}{d}$, but we supposed that
+    the orde of $K$ is $k$. So $k=\frac{n}{d}$. In other words, $\frac{n}{k}=d$. This is what we needed to show.
+\end{proof}
+\newpage
+\subsection{Homomorphism and Isomorphisms}
+Let $G,H$ be groups. We call a mapping $\phi$ from $G$ to $H$ a homomorphism if 
+\[
+\phi(g_1g_2)=\phi(g_1)\phi(g_2)
+\]
+for all $g_1,g_2 \in G$.
+\begin{theorem}
+    If $\phi$ is a homomorphism from $G$ to $H$ then it has the following properties
+    \begin{align*}
+        &\phi(e_G)=e_H \\
+        &\phi(g^{-1})=(\phi(g))^{-1}\\
+        &\phi(g^k)= \phi(g)^k
+    \end{align*}
+\end{theorem}
+\begin{proof}
+    For the first property, notice that $\phi(e)=\phi(ee)=\phi(e)\phi(e)$. Left cancelling in $H$ gives 
+    $e_H=\phi(e_G)$. For the second property, consider $\phi(g^{-1})\phi(g)=\phi(g^{-1}g)=\phi(e_G)=e_H$. Multiplying 
+    both sides on the right by inverse of $\phi(g)$ gives what we want to show.
+    \\\\
+    For the third property, there are two cases two consider, $k\geq 0$ and $k<0$. We prove $k\geq 0$ by induction on $k$. Notice that 
+    if $k=0$, $\phi(g^0)=\phi(e_G)=e_H=\phi(g)^0$. Suppose for all $m< k$, the identity holds. Notice that 
+    \[
+    \phi(g^k)=\phi(g)\phi(g^{k-1})=\phi(g)\phi(g)^{k-1}=\phi(g)^k
+    \]
+    Now consider the case of $k<0$. Write $k=-m$, for $m>0$ then 
+    \[
+    \phi(g^k)=\phi(g^{-m})=\phi((g^{m})^{-1})= \phi(g^m)^{-1}= ((\phi(g))^m)^{-1}=\phi(g)^{-m}
+    \]
+\end{proof}
+The idea of these three corollaries is that the homomorphism preserves the power of an element. If an element $h$ was a $k$th power of $g$, then it will be mapped to
+the $k$th power of whatever $g$ is mapped.
 
 % ------------------------------------------------------------------------------
 % Reference and Cited Works
